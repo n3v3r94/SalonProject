@@ -173,11 +173,13 @@ namespace Salon.Web.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult AddWorker(string id , string role)
+        public IActionResult AddWorker(string id , string role,int productId)
         {
-            if (ModelState.IsValid)
+           
+
+           if (ModelState.IsValid)
             {
-                this.salonSvc.AddWorker(id, role);
+                this.salonSvc.AddWorker(id, role, productId);
                 return RedirectToAction(nameof(MySalon));
             }
 
@@ -185,6 +187,11 @@ namespace Salon.Web.Controllers
         
         }
 
+
+        public IActionResult AddEvent()
+        {
+            return View();
+        }
 
     }
 

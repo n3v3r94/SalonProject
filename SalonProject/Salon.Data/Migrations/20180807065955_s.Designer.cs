@@ -11,8 +11,8 @@ using System;
 namespace Salon.Data.Migrations
 {
     [DbContext(typeof(SalonDbContext))]
-    [Migration("20180804090052_UniqueuserId")]
-    partial class UniqueuserId
+    [Migration("20180807065955_s")]
+    partial class s
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

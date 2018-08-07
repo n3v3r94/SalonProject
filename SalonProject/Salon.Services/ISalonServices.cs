@@ -36,6 +36,6 @@ namespace Salon.Services
         
          DateTime Book();
 
-        void AddWorker(string id, string role);
+        void AddWorker(string id, string role,int productId);
     }
 }

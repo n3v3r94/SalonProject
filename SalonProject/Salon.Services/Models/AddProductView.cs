@@ -9,7 +9,7 @@ namespace Salon.Services.Models
         public string Name { get; set; }
 
         [Range(0, double.MaxValue)]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [Range(0, double.MaxValue)]
         public double Discount { get; set; }

@@ -202,26 +202,35 @@ namespace Salon.Services.Implementation
         public ProductDetails ProductDetails(int id)
         {
             var productWorkers = this.db.WorkerProduct.Include(p => p.Product).ThenInclude(w => w.Workers).Where(p => p.Product.Id == id);
-
             var productDetails = new ProductDetails();
-          
-            foreach (var item in productWorkers)
+
+            if (productWorkers.Any())
             {
-                var worker = this.db.Worker.SingleOrDefault(w => w.Id == item.WorkerId);
-                var product = this.db.Products.SingleOrDefault(w => w.Id == item.ProductId);
 
-               
-                productDetails.Id = product.Id;
-                productDetails.Name = product.Name;
-                productDetails.Price = product.Price;
-                productDetails.Discount = product.Discount;
+                foreach (var item in productWorkers)
+                {
+                    var worker = this.db.Worker.SingleOrDefault(w => w.Id == item.WorkerId);
+                    var product = this.db.Products.SingleOrDefault(w => w.Id == item.ProductId);
 
-                var user = userManager.FindByIdAsync(worker.userId).Result;
-                var workerName = user.Email;
-                productDetails.Workers.Add(workerName);
+                    productDetails.Id = product.Id;
+                    productDetails.Name = product.Name;
+                    productDetails.Price = product.Price;
+                    productDetails.Discount = product.Discount;
 
-
+                    var user = userManager.FindByIdAsync(worker.userId).Result;
+                    var workerName = user.Email;
+                    productDetails.Workers.Add(workerName);
+                }
             }
+            else
+            {
+                var productWithoutWorkers = this.db.Products.FirstOrDefault(p => p.Id == id);
+
+                productDetails.Id = productWithoutWorkers.Id;
+                productDetails.Price = productWithoutWorkers.Price;
+                productDetails.Discount = productWithoutWorkers.Discount;
+            }
+
 
             return productDetails;
         }
@@ -233,6 +242,7 @@ namespace Salon.Services.Implementation
 
             var product = this.db.Products.SingleOrDefault(p => p.Id == id);
             var user = userManager.FindByEmailAsync(email).Result;
+            searchResult.productId = product.Id;
             searchResult.Name = product.Name;
             searchResult.Price = product.Price;
             searchResult.Discount = product.Discount;
@@ -244,7 +254,7 @@ namespace Salon.Services.Implementation
             return searchResult;
         }
 
-        public void AddWorker(string id, string role)
+        public void AddWorker(string id, string role, int productId)
         {
             var user =  this.userManager.FindByIdAsync(id).Result;
             this.userManager.AddToRoleAsync(user, role).Wait();
@@ -254,7 +264,12 @@ namespace Salon.Services.Implementation
             worker.userId = id;
 
             this.db.Worker.Add(worker);
+            var product = this.db.Products.FirstOrDefault(p => p.Id == productId);
+            WorkerProduct workerProduct = new WorkerProduct();
 
+            workerProduct.Worker = worker;
+            workerProduct.Product = product;
+            this.db.WorkerProduct.Add(workerProduct);
             db.SaveChanges();
 
         }

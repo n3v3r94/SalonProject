@@ -139,7 +139,7 @@ namespace Salon.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<decimal>("Price");
+                    b.Property<double>("Price");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()

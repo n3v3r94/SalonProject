@@ -7,13 +7,13 @@ namespace Salon.Services.Models
 
     public class SearchByUser
     {
-        public int Id { get; set; }
+        public int productId { get; set; }
 
         [StringLength(100)]
         public string Name { get; set; }
 
         [Range(0,double.MaxValue)]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
 
         [Range(0, double.MaxValue)]

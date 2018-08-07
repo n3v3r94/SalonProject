@@ -11,8 +11,8 @@ using System;
 namespace Salon.Data.Migrations
 {
     [DbContext(typeof(SalonDbContext))]
-    [Migration("20180803120646_s")]
-    partial class s
+    [Migration("20180807070320_ChangeDecimalToDouble")]
+    partial class ChangeDecimalToDouble
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,8 +140,7 @@ namespace Salon.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("Price")
-                        .IsRequired();
+                    b.Property<double>("Price");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -245,6 +244,10 @@ namespace Salon.Data.Migrations
                     b.Property<string>("userId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("userId")
+                        .IsUnique()
+                        .HasFilter("[userId] IS NOT NULL");
 
                     b.ToTable("Worker");
                 });

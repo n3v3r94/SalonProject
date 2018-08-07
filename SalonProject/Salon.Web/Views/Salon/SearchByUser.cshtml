@@ -5,12 +5,13 @@
 
 <h2>SearchByUser</h2>
 
-
+  
 <div class="row">
     <div class="col-lg-offset-4">
         <div class="bottom">
 
             <p>
+
                 <div class="form">
                     <label asp-for="@Model.User.Email"></label>
                     @Model.User.Email
@@ -32,7 +33,7 @@
                         @item
                     }
                 </div>
-
+               
 
             </p>
             <form asp-action="AddWorker" method="post">
@@ -42,6 +43,8 @@
                 <div>
                     <input type="hidden" name="id" value="@Model.User.Id" />
                 </div>
+                <input type="hidden" name="productId" value="@Model.productId" />
+
                 <button types="submit" class="btn btn-primary"> Add worker</button>
             </form>
 
@@ -66,6 +69,9 @@
 
     <tbody>
         <tr>
+           
+               
+            
             <th>@Model.Name</th>
             <th>@Model.Price</th>
             <th>@Model.Discount</th>
