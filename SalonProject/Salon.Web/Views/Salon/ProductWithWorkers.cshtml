@@ -1,0 +1,19 @@
+﻿@model ProductWithWorkers
+
+@{
+    ViewData["Title"] = "ProductWithWorkers";
+}
+
+<h2>ProductWithWorkers</h2>
+
+
+
+<div class="row">
+    <div class="col-md-5">
+        
+        <select  asp-items="@Model.selectWorker"></select>
+           <a asp-controller="Salon" asp-action="Book" class="btn btn-primary" role="button"> Book</a>
+    </div>
+
+    
+</div>
